@@ -46,8 +46,13 @@ namespace AzureRmHelper
         
         public AuthenticationResult GetResourceManagerToken()
         {
-            IAuthorizationParameters parent;
-            parent = new AuthorizationParameters(PromptBehavior.RefreshSession, null);// this.Handle);
+
+            //IAuthorizationParameters parent;
+            //parent = new AuthorizationParameters(PromptBehavior.RefreshSession, null);// this.Handle);
+
+            IPlatformParameters parent;
+            parent = new PlatformParameters(PromptBehavior.RefreshSession);
+
 
             //if (_authContext.TokenCache.ReadItems().Count() > 0)
                 //_authContext =
@@ -60,12 +65,11 @@ namespace AzureRmHelper
 
         public AuthenticationResult GetSubscriptionToken()
         {
-            IAuthorizationParameters parent;
-            parent = new AuthorizationParameters(PromptBehavior.Always, null);// this.Handle);
-
+            IPlatformParameters parent;
+            parent = new PlatformParameters(PromptBehavior.RefreshSession);
             //if (_authContext.TokenCache.ReadItems().Count() > 0)
-                //_authContext =
-                //    new AuthenticationContext(_authContext.TokenCache.ReadItems().First().Authority);
+            //_authContext =
+            //    new AuthenticationContext(_authContext.TokenCache.ReadItems().First().Authority);
 
             var authResult = _authContext.AcquireTokenAsync(azureSubscriptionUri, _clientId, _returnUri, parent).Result;
 
